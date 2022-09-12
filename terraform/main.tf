@@ -1,10 +1,10 @@
-provider "kubernetes" {
+provider "kubernetes" {         # provider is incorrect. It should say "aws"
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
 }
 
 provider "aws" {
-  region = var.region
+  region = var.region         # This should be region = "${var.region}"
 }
 
 data "aws_availability_zones" "available" {}
@@ -22,7 +22,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "18.26.6"
 
-  cluster_name    = local.cluster_name
+  cluster_name    = local.cluster_name    # This should be cluster_name   = "challenge-eks"
   cluster_version = "1.22"
   cluster_secure  = true
 
